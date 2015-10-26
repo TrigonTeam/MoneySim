@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import cz.trigon.bicepsrendererapi.Surface;
+
 public class MainActivity extends Activity {
 
     private GLSurfaceView view;
@@ -20,7 +22,7 @@ public class MainActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        view = new MainView(this);
+        Surface view = new Surface(this, new MoneyGame());
         setContentView(view);
     }
 

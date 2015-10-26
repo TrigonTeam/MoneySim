@@ -2,9 +2,13 @@ package cz.trigon.moneysim;
 
 import android.opengl.GLES20;
 
+import java.util.Random;
+
 import cz.trigon.bicepsrendererapi.game.Game;
 
 public class MoneyGame extends Game {
+
+    Random rnd = new Random();
 
     @Override
     public void setup() {
@@ -13,7 +17,9 @@ public class MoneyGame extends Game {
 
     @Override
     public void tick() {
-
+        if(this.surface.getInput().isTouched()) {
+            GLES20.glClearColor(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), 1);
+        }
     }
 
     @Override
