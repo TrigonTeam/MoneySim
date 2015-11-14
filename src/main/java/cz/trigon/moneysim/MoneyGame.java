@@ -17,9 +17,7 @@ public class MoneyGame extends Game {
 
     @Override
     public void tick() {
-        if(this.surface.getInput().isTouched()) {
-            GLES20.glClearColor(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), 1);
-        }
+
     }
 
     @Override
