@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import java.io.IOException;
 
 import cz.trigon.bicepsrendererapi.Surface;
+import cz.trigon.bicepsrendererapi.content.Content;
 
 public class MainActivity extends Activity {
 
@@ -27,14 +28,14 @@ public class MainActivity extends Activity {
         Surface view = new Surface(this, new MoneyGame());
         setContentView(view);
 
-        AssetManager assets = this.getAssets();
+        Content c = new Content(this.getAssets());
         try {
-            for(String s : assets.list("/assets")) {
-                Log.v("MLG", s);
-            }
+            c.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("contentTest", e.getMessage());
         }
+
+        c.getPreloader();
     }
 
 }
