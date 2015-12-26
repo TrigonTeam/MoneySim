@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import java.io.IOException;
 
-import cz.trigon.bicepsrendererapi.Surface;
+import cz.trigon.bicepsrendererapi.game.Surface;
 import cz.trigon.bicepsrendererapi.obj.Content;
 
 public class MainActivity extends Activity {
