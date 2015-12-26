@@ -1,8 +1,6 @@
 package cz.trigon.moneysim;
 
 import android.app.Activity;
-import android.content.res.AssetManager;
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -11,7 +9,7 @@ import android.view.WindowManager;
 import java.io.IOException;
 
 import cz.trigon.bicepsrendererapi.Surface;
-import cz.trigon.bicepsrendererapi.content.Content;
+import cz.trigon.bicepsrendererapi.obj.Content;
 
 public class MainActivity extends Activity {
 
@@ -28,14 +26,17 @@ public class MainActivity extends Activity {
         Surface view = new Surface(this, new MoneyGame());
         setContentView(view);
 
-        Content c = new Content(this.getAssets());
+        Content c = new Content();
+
         try {
             c.load();
         } catch (IOException e) {
-            Log.e("contentTest", e.getMessage());
+            Log.e(Surface.LDTAG, "Couldn't load content", e);
         }
 
-        c.getPreloader();
+        Content c2 = new Content();
+
+        Log.d(Surface.LDTAG, "Dir count: " + c2.listDirectories("/").size());
     }
 
 }
