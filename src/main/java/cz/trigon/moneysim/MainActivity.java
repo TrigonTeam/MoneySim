@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import cz.trigon.bicepsrendererapi.game.Surface;
 import cz.trigon.bicepsrendererapi.obj.Content;
+import cz.trigon.bicepsrendererapi.obj.Texture;
 
 public class MainActivity extends Activity {
 
@@ -35,6 +36,12 @@ public class MainActivity extends Activity {
         }
 
         Content c2 = new Content();
+        try {
+            Texture t = c2.get("/default.images/Illuminati.png", Texture.class);
+            Log.d(Surface.LDTAG, t.getSize().x() + "x" + t.getSize().y());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Log.d(Surface.LDTAG, "Dir count: " + c2.listDirectories("/").size());
     }
