@@ -9,7 +9,9 @@ import android.view.WindowManager;
 import java.io.IOException;
 
 import cz.trigon.bicepsrendererapi.game.Surface;
+import cz.trigon.bicepsrendererapi.managers.SoundManager;
 import cz.trigon.bicepsrendererapi.obj.Content;
+import cz.trigon.bicepsrendererapi.obj.Spritesheet;
 import cz.trigon.bicepsrendererapi.obj.Texture;
 
 public class MainActivity extends Activity {
@@ -43,7 +45,29 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
 
+        try {
+            Spritesheet s = c.get("/default.images/spritesheet2.png", Spritesheet.class, false, new Object[] { new String[] { "A", "B" }, null},
+                    new Class[] { String[].class, Content.class });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.d(Surface.LDTAG, "Dir count: " + c2.listDirectories("/").size());
+
+        SoundManager s = new SoundManager();
+        try {
+            int m = s.addMusic(c.getDescriptor("/default.music/digeridoo.mp3"));
+            int s1 = s.addSound(c.getDescriptor("/default.sounds/table-hit.mp3"));
+            int s2 = s.addSound(c.getDescriptor("/default.sounds/flame-ignition.wav"));
+
+            s.playMusic(m);
+            s.playSound(s1);
+            s.playSound(s2);
+            s.stopMusic();
+            //s.resumeMusic();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
