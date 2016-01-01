@@ -7,6 +7,7 @@ import java.util.Random;
 
 import cz.trigon.bicepsrendererapi.game.Game;
 import cz.trigon.bicepsrendererapi.obj.Content;
+import cz.trigon.bicepsrendererapi.obj.Music;
 import cz.trigon.bicepsrendererapi.obj.SoundEffect;
 
 public class MoneyGame extends Game {
@@ -14,6 +15,7 @@ public class MoneyGame extends Game {
     private Random rnd = new Random();
     private Content content;
     private SoundEffect se;
+    private Music m;
 
     @Override
     public void setup() {
@@ -23,6 +25,8 @@ public class MoneyGame extends Game {
             this.content = new Content();
             this.content.load();
             this.se = this.content.get("/default.sounds/table-hit.mp3", SoundEffect.class);
+            this.m = this.content.get("/default.music/digeridoo.mp3", Music.class);
+            this.m.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,8 +35,13 @@ public class MoneyGame extends Game {
     @Override
     public void tick(int ticks) {
         if (ticks % (60 * 4) == 0) {
-            se.play(rnd.nextFloat());
+            this.se.play(rnd.nextFloat());
             GLES20.glClearColor(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), 1f);
+
+            if (this.m.isPaused())
+                this.m.resume();
+            else
+                this.m.pause();
         }
     }
 
