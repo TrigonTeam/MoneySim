@@ -1,11 +1,13 @@
 package cz.trigon.moneysim;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Random;
 
 import cz.trigon.bicepsrendererapi.game.Game;
+import cz.trigon.bicepsrendererapi.game.Surface;
 import cz.trigon.bicepsrendererapi.obj.Content;
 import cz.trigon.bicepsrendererapi.obj.Input;
 import cz.trigon.bicepsrendererapi.obj.Music;
@@ -39,9 +41,12 @@ public class MoneyGame extends Game {
     public void tick(int ticks) {
         Input i = new Input();
 
-        if (ticks % 60 == 0)
-            if (i.getLightLevel() > 50)
-                GLES20.glClearColor(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), 1f);
+        if (i.isTouched()) {
+            GLES20.glClearColor(i.getTouchX() / this.surface.getCanvasWidth(),
+                    i.getTouchY() / this.surface.getCanvasHeight(), (float) Math.sin(ticks / 60f), 1f);
+
+            Log.d(Surface.LDTAG, "Touch " + i.getTouch().toString());
+        }
     }
 
     @Override
