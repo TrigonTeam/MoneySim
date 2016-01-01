@@ -7,6 +7,7 @@ import java.util.Random;
 
 import cz.trigon.bicepsrendererapi.game.Game;
 import cz.trigon.bicepsrendererapi.obj.Content;
+import cz.trigon.bicepsrendererapi.obj.Input;
 import cz.trigon.bicepsrendererapi.obj.Music;
 import cz.trigon.bicepsrendererapi.obj.SoundEffect;
 
@@ -30,19 +31,17 @@ public class MoneyGame extends Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
     @Override
     public void tick(int ticks) {
-        if (ticks % (60 * 4) == 0) {
-            this.se.play(rnd.nextFloat());
-            GLES20.glClearColor(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), 1f);
+        Input i = new Input();
 
-            if (this.m.isPaused())
-                this.m.resume();
-            else
-                this.m.pause();
-        }
+        if (ticks % 60 == 0)
+            if (i.getLightLevel() > 50)
+                GLES20.glClearColor(rnd.nextFloat(), rnd.nextFloat(), rnd.nextFloat(), 1f);
     }
 
     @Override
