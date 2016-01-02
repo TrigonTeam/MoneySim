@@ -9,7 +9,6 @@ import cz.trigon.bicepsrendererapi.game.Game;
 import cz.trigon.bicepsrendererapi.gl.interfaces.render.IImmediateRenderer;
 import cz.trigon.bicepsrendererapi.gl.render.ImmediateRenderer;
 import cz.trigon.bicepsrendererapi.managers.input.InputManager;
-import cz.trigon.bicepsrendererapi.obj.Input;
 
 public class InputTest extends Game {
 
@@ -29,7 +28,6 @@ public class InputTest extends Game {
         }
 
         this.input = this.surface.getInput();
-        this.renderer = new ImmediateRenderer(this.surface);
     }
 
     @Override
@@ -43,20 +41,17 @@ public class InputTest extends Game {
 
         float red = ImmediateRenderer.packColor(255, 0, 0, 255);
         this.renderer.color(red);
-        //this.renderer.setPrimitiveMode(IImmediateRenderer.PrimitiveMode.LINES);
+        this.renderer.setPrimitiveMode(IImmediateRenderer.PrimitiveMode.LINES);
 
         this.renderer.setLineWidth(2);
 
         MotionEvent e = this.input.getLastEvent();
         if(e != null) {
             for (int i = 0; i < e.getPointerCount(); i++) {
-                this.renderer.vertex(e.getX(i) * this.surface.getCanvasRatio(), 50);
-                this.renderer.vertex(this.surface.getCanvasWidth(), 50);
                 this.renderer.vertex(e.getX(i) * this.surface.getCanvasRatio(), 0);
-
-                //this.renderer.vertex(e.getX(i) * this.surface.getCanvasRatio(), this.surface.getCanvasHeight());
-                //this.renderer.vertex(0, e.getY(i) * this.surface.getCanvasRatio());
-                //this.renderer.vertex(this.surface.getCanvasWidth(), e.getY(i) * this.surface.getCanvasRatio());
+                this.renderer.vertex(e.getX(i) * this.surface.getCanvasRatio(), this.surface.getCanvasHeight());
+                this.renderer.vertex(0, e.getY(i) * this.surface.getCanvasRatio());
+                this.renderer.vertex(this.surface.getCanvasWidth(), e.getY(i) * this.surface.getCanvasRatio());
             }
         }
 
@@ -65,6 +60,6 @@ public class InputTest extends Game {
 
     @Override
     public void surfaceChanged(int w, int h) {
-
+        this.renderer = new ImmediateRenderer(this.surface);
     }
 }
