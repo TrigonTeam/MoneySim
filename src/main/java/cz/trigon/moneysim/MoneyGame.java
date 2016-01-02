@@ -1,7 +1,6 @@
 package cz.trigon.moneysim;
 
 import android.opengl.GLES20;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.Random;
@@ -23,6 +22,7 @@ public class MoneyGame extends Game {
     private Music m;
 
     private IImmediateRenderer renderer;
+    boolean wasTouched = false;
 
     @Override
     public void setup() {
@@ -33,15 +33,13 @@ public class MoneyGame extends Game {
             this.content.load();
             this.se = this.content.get("/default.sounds/table-hit.mp3", SoundEffect.class);
             this.m = this.content.get("/default.music/digeridoo.mp3", Music.class);
-            this.m.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    this.renderer = new ImmediateRenderer(this.getSurface());
-
-
+        this.renderer = new ImmediateRenderer(this.getSurface());
     }
+
 
     @Override
     public void tick(int ticks) {
@@ -51,7 +49,15 @@ public class MoneyGame extends Game {
             GLES20.glClearColor(i.getTouchX() / this.surface.getCanvasWidth(),
                     i.getTouchY() / this.surface.getCanvasHeight(), (float) Math.sin(ticks / 60f), 1f);
 
-            Log.d(Surface.LDTAG, "Touch " + i.getTouch().toString());
+            if (!m.isPlaying())
+                m.play();
+
+            if (!wasTouched) {
+                se.play();
+                wasTouched = true;
+            }
+        } else if (wasTouched) {
+            wasTouched = false;
         }
     }
 
