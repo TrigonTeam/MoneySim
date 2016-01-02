@@ -1,6 +1,7 @@
 package cz.trigon.moneysim;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Random;
