@@ -8,6 +8,8 @@ import java.util.Random;
 
 import cz.trigon.bicepsrendererapi.game.Game;
 import cz.trigon.bicepsrendererapi.game.Surface;
+import cz.trigon.bicepsrendererapi.gl.interfaces.render.IImmediateRenderer;
+import cz.trigon.bicepsrendererapi.gl.render.ImmediateRenderer;
 import cz.trigon.bicepsrendererapi.obj.Content;
 import cz.trigon.bicepsrendererapi.obj.Input;
 import cz.trigon.bicepsrendererapi.obj.Music;
@@ -19,6 +21,8 @@ public class MoneyGame extends Game {
     private Content content;
     private SoundEffect se;
     private Music m;
+
+    private IImmediateRenderer renderer;
 
     @Override
     public void setup() {
@@ -33,6 +37,8 @@ public class MoneyGame extends Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    this.renderer = new ImmediateRenderer(this.getSurface());
 
 
     }
@@ -52,6 +58,10 @@ public class MoneyGame extends Game {
     @Override
     public void renderTick(float ptt) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        this.renderer.vertex(0, 0);
+        this.renderer.vertex(100, 0);
+        this.renderer.vertex(0, 100);
+        this.renderer.flush();
     }
 
     @Override
