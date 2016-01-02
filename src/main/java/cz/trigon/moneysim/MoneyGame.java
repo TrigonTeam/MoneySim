@@ -66,14 +66,18 @@ public class MoneyGame extends Game {
     public void renderTick(float ptt) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
+        float red = ImmediateRenderer.packColor(255, 0, 0, 255);
+        float green = ImmediateRenderer.packColor(0, 255, 0, 255);
+        float blue = ImmediateRenderer.packColor(0, 0, 255, 255);
+
         long start = System.nanoTime();
         for (int x = 0; x < 108; x++) {
             for (int y = 0; y < 192; y++) {
-                this.renderer.color(1, 0, 0, 1);
+                this.renderer.color(red);
                 this.renderer.vertex(x*10, y*10);
-                this.renderer.color(0, 1, 0, 1);
+                this.renderer.color(green);
                 this.renderer.vertex(10+x*10, y*10);
-                this.renderer.color(0, 0, 1, 1);
+                this.renderer.color(blue);
                 this.renderer.vertex(x*10, 10+y*10);
             }
         }
