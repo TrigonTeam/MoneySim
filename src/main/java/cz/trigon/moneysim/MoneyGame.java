@@ -1,13 +1,11 @@
 package cz.trigon.moneysim;
 
 import android.opengl.GLES20;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.Random;
 
 import cz.trigon.bicepsrendererapi.game.Game;
-import cz.trigon.bicepsrendererapi.game.Surface;
 import cz.trigon.bicepsrendererapi.gl.interfaces.render.IImmediateRenderer;
 import cz.trigon.bicepsrendererapi.gl.render.ImmediateRenderer;
 import cz.trigon.bicepsrendererapi.obj.Content;
@@ -23,7 +21,13 @@ public class MoneyGame extends Game {
     private Music m;
 
     private IImmediateRenderer renderer;
-    boolean wasTouched = false;
+    private boolean wasTouched = false;
+    private Runnable infoCallback;
+    float buildMs, flushMs;
+
+    protected void setInfoCallback(Runnable c) {
+        this.infoCallback = c;
+    }
 
     @Override
     public void setup() {
@@ -40,7 +44,6 @@ public class MoneyGame extends Game {
 
         this.renderer = new ImmediateRenderer(this.getSurface());
     }
-
 
     @Override
     public void tick(int ticks) {
@@ -81,12 +84,12 @@ public class MoneyGame extends Game {
                 this.renderer.vertex(x*10, 10+y*10);
             }
         }
-        Log.i(Surface.LDTAG, "Building took " + (System.nanoTime()-start)/1000000D + "ms");
 
+        this.buildMs = (System.nanoTime() - start) / 1000000f;
         start = System.nanoTime();
         this.renderer.flush();
-        Log.i(Surface.LDTAG, "Flushing took " + (System.nanoTime()-start)/1000000D + "ms");
-
+        this.flushMs = (System.nanoTime() - start) / 1000000f;
+        this.infoCallback.run();
     }
 
     @Override
