@@ -41,8 +41,6 @@ public class MoneyGame extends Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.renderer = new ImmediateRenderer(this.getSurface());
     }
 
     @Override
@@ -94,6 +92,6 @@ public class MoneyGame extends Game {
 
     @Override
     public void surfaceChanged(int w, int h) {
-
+        this.renderer = new ImmediateRenderer(this.getSurface());
     }
 }

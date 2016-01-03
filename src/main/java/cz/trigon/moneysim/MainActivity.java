@@ -32,10 +32,10 @@ public class MainActivity extends Activity {
         lp.addRule(RelativeLayout.ALIGN_TOP);
 
         final TextView tvFps = new TextView(this);
-        //final MoneyGame m = new MoneyGame();
-        final InputTest m = new InputTest();
+        final MoneyGame m = new MoneyGame();
+        //final InputTest m = new InputTest();
         final Surface view = new Surface(this, m);
-        /*m.setInfoCallback(new Runnable() {
+        m.setInfoCallback(new Runnable() {
             @Override
             public void run() {
                 MainActivity.this.runOnUiThread(new Runnable() {
@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
                     }
                 });
             }
-        });*/
+        });
 
         rl.addView(view);
 
