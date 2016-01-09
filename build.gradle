@@ -25,3 +25,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':bicepsrenderer')
 }
+
+task buildIndex {
+    File assets = file('src/main/assets/')
+    File index = file(new File(assets, 'index'))
+    def files = []
+    assets.eachFileRecurse { dir -> files.add(dir) }
+
+    index.withWriter { out -> files.each { File f -> out.println f.path.replace(assets.path, '')
+            .replace('\\', '/').substring(1) }}
+}
+
+buildIndex.mustRunAfter preBuild

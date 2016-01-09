@@ -36,7 +36,7 @@ public class MoneyGame extends Game {
 
         try {
             this.content = new Content();
-            this.content.load();
+            this.content.load("index");
             this.se = this.content.get("/default.sounds/table-hit.mp3", SoundEffect.class);
             this.m = this.content.get("/default.music/digeridoo.mp3", Music.class);
         } catch (IOException e) {
