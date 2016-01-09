@@ -80,7 +80,7 @@ public class MoneyGame extends Game {
             }
         }
 
-        this.renderer.color(Color.packColor(255, 0, 0, 255));
+        this.renderer.color(Color.GRAY);
         this.renderer.vertex(0, this.surface.getCanvasHeight());
         this.renderer.vertex(900, this.surface.getCanvasHeight());
         this.renderer.vertex(450, 0);
