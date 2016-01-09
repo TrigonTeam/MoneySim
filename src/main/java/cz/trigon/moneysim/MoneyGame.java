@@ -12,6 +12,7 @@ import cz.trigon.bicepsrendererapi.obj.Content;
 import cz.trigon.bicepsrendererapi.obj.Input;
 import cz.trigon.bicepsrendererapi.obj.Music;
 import cz.trigon.bicepsrendererapi.obj.SoundEffect;
+import cz.trigon.bicepsrendererapi.util.Color;
 
 public class MoneyGame extends Game {
 
@@ -41,8 +42,6 @@ public class MoneyGame extends Game {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.renderer = new ImmediateRenderer(this.getSurface());
     }
 
     @Override
@@ -69,21 +68,22 @@ public class MoneyGame extends Game {
     public void renderTick(float ptt) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        float red = ImmediateRenderer.packColor(255, 0, 0, 255);
-        float green = ImmediateRenderer.packColor(0, 255, 0, 255);
-        float blue = ImmediateRenderer.packColor(0, 0, 255, 255);
-
         long start = System.nanoTime();
         for (int x = 0; x < 108; x++) {
             for (int y = 0; y < 192; y++) {
-                this.renderer.color(red);
+                this.renderer.color(Color.RED);
                 this.renderer.vertex(x*10, y*10);
-                this.renderer.color(green);
+                this.renderer.color(Color.GREEN);
                 this.renderer.vertex(10+x*10, y*10);
-                this.renderer.color(blue);
+                this.renderer.color(Color.BLUE);
                 this.renderer.vertex(x*10, 10+y*10);
             }
         }
+
+        this.renderer.color(Color.packColor(255, 0, 0, 255));
+        this.renderer.vertex(0, this.surface.getCanvasHeight());
+        this.renderer.vertex(900, this.surface.getCanvasHeight());
+        this.renderer.vertex(450, 0);
 
         this.buildMs = (System.nanoTime() - start) / 1000000f;
         start = System.nanoTime();
@@ -94,6 +94,6 @@ public class MoneyGame extends Game {
 
     @Override
     public void surfaceChanged(int w, int h) {
-
+        this.renderer = new ImmediateRenderer(this.getSurface());
     }
 }
