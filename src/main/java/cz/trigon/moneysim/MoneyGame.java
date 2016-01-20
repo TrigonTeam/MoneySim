@@ -1,11 +1,13 @@
 package cz.trigon.moneysim;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Random;
 
 import cz.trigon.bicepsrendererapi.game.Game;
+import cz.trigon.bicepsrendererapi.game.Surface;
 import cz.trigon.bicepsrendererapi.gl.interfaces.render.IImmediateRenderer;
 import cz.trigon.bicepsrendererapi.gl.render.ImmediateRenderer;
 import cz.trigon.bicepsrendererapi.obj.Content;
@@ -33,6 +35,11 @@ public class MoneyGame extends Game {
     @Override
     public void setup() {
         GLES20.glClearColor(0, 1, 0, 1);
+
+        GLES20.glFrontFace(GLES20.GL_CW);
+        GLES20.glCullFace(GLES20.GL_BACK);
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
+        GLES20.glDepthMask(false);
 
         try {
             this.content = new Content();
@@ -65,11 +72,23 @@ public class MoneyGame extends Game {
     }
 
     @Override
-    public void renderTick(float ptt) {
+    public void renderTick(int tick, float ptt) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
+        this.renderer.getShader().setUniform1f("time", tick + ptt);
+
         long start = System.nanoTime();
-        for (int x = 0; x < 108; x++) {
+
+        /*for (int i = 0; i < 200; i++) {
+            this.renderer.color(Color.RED);
+            this.renderer.vertex(i, i);
+            this.renderer.color(Color.GREEN);
+            this.renderer.vertex(this.surface.getCanvasWidth()-i, i);
+            this.renderer.color(Color.BLUE);
+            this.renderer.vertex(i, this.surface.getCanvasHeight()-i);
+        }*/
+
+        /*for (int x = 0; x < 108; x++) {
             for (int y = 0; y < 192; y++) {
                 this.renderer.color(Color.RED);
                 this.renderer.vertex(x*10, y*10);
@@ -78,12 +97,17 @@ public class MoneyGame extends Game {
                 this.renderer.color(Color.BLUE);
                 this.renderer.vertex(x*10, 10+y*10);
             }
-        }
+        }*/
 
-        this.renderer.color(Color.packColor(255, 0, 0, 255));
+        this.renderer.color(Color.packColor(255, 255, 255, 255));
+
         this.renderer.vertex(0, this.surface.getCanvasHeight());
-        this.renderer.vertex(900, this.surface.getCanvasHeight());
-        this.renderer.vertex(450, 0);
+        this.renderer.vertex(0, 0);
+        this.renderer.vertex(this.surface.getCanvasWidth(), 0);
+
+        this.renderer.vertex(this.surface.getCanvasWidth(), this.surface.getCanvasHeight());
+        this.renderer.vertex(0, this.surface.getCanvasHeight());
+        this.renderer.vertex(this.surface.getCanvasWidth(), 0);
 
         this.buildMs = (System.nanoTime() - start) / 1000000f;
         start = System.nanoTime();
